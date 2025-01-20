@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Контактна форма</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+</head>
+<body>
+  <form id="contact-form">
+    <input type="text" name="user_name" placeholder="Ваше ім'я" required>
+    <input type="email" name="user_email" placeholder="Ваш email" required>
+    <textarea name="message" placeholder="Ваше повідомлення" required></textarea>
+    <button type="submit">Відправити</button>
+    <p id="statusMessage"></p>
+  </form>
+
+  <script>
+    // Инициализация EmailJS с вашим USER_ID
+    emailjs.init("YOUR_USER_ID"); // Замените на ваш реальный USER_ID
+
+    // Обработчик отправки формы
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Отправка формы через EmailJS
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+      .then(function(response) {
+        // Сообщение об успехе
+        document.getElementById("statusMessage").textContent = "Ваше повідомлення успішно відправлено!";
+        document.getElementById("statusMessage").style.color = "green";
+        document.getElementById("contact-form").reset();
+      }, function(error) {
+        // Сообщение об ошибке
+        document.getElementById("statusMessage").textContent = "Сталася помилка. Спробуйте пізніше.";
+        document.getElementById("statusMessage").style.color = "red";
+        console.error("Помилка:", error);
+      });
+    });
+  </script>
+</body>
+</html>
